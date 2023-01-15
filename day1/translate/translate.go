@@ -17,8 +17,8 @@ type DictRequest struct {
 type DictResponse struct {
 	Rc   int `json:"rc"`
 	Wiki struct {
-		KnownInLaguages int `json:"known_in_laguages"`
-		Description     struct {
+		KnownInLanguages int `json:"known_in_laguages"`
+		Description      struct {
 			Source string      `json:"source"`
 			Target interface{} `json:"target"`
 		} `json:"description"`
@@ -97,13 +97,13 @@ func translate(word string) {
 	if resp.StatusCode != 200 {
 		log.Fatal("bad StatusCode: ", resp.StatusCode, "body", string(bodyText))
 	}
-	var dictRespoonse DictResponse
-	err = json.Unmarshal(bodyText, &dictRespoonse)
+	var dictResponse DictResponse
+	err = json.Unmarshal(bodyText, &dictResponse)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(word, "UK: ", dictRespoonse.Dictionary.Prons.En, "US: ", dictRespoonse.Dictionary.Prons.EnUs)
-	for _, item := range dictRespoonse.Dictionary.Explanations {
+	fmt.Println(word, "UK: ", dictResponse.Dictionary.Prons.En, "US: ", dictResponse.Dictionary.Prons.EnUs)
+	for _, item := range dictResponse.Dictionary.Explanations {
 		fmt.Println(item)
 	}
 }
