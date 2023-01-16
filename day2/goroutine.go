@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"time"
 )
 
 var (
@@ -15,12 +14,15 @@ func Print(i int) {
 	fmt.Println("hello routine", i)
 }
 func routine() {
+	var wg sync.WaitGroup // 声明一个waitgroup
+	wg.Add(5)             // 添加五个任务
 	for i := 1; i <= 5; i++ {
 		go func(j int) {
+			defer wg.Done() // 完成任务任务数-1
 			Print(j)
 		}(i)
 	}
-	time.Sleep(time.Second)
+	wg.Wait() // 等待所有任务完后
 }
 func CalSquare() {
 	src := make(chan int)
@@ -54,15 +56,5 @@ func addwithoutlock() {
 	}
 }
 func main() {
-	for i := 1; i <= 5; i++ {
-		go addwithlock()
-	}
-	time.Sleep(time.Second)
-	fmt.Println(x)
-	x = 0
-	for i := 1; i <= 5; i++ {
-		go addwithoutlock()
-	}
-	time.Sleep(time.Second)
-	fmt.Println(x)
+	routine()
 }
