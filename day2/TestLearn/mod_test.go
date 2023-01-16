@@ -10,7 +10,11 @@ func TestHelloTom(t *testing.T) {
 	exceptOutput := "Tom"
 	assert.Equal(t, output, exceptOutput)
 }
-func TestJudgePassLine(t *testing.T) {
+func TestJudgePassLineTrue(t *testing.T) {
 	output := JudgePassLine(70)
 	assert.Equal(t, true, output)
+}
+func TestJudgePassLineFail(t *testing.T) {
+	output := JudgePassLine(50)
+	assert.Equal(t, false, output)
 }
